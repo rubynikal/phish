@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="window.css">
+</head>
+<body>
+<h1>Phishing detection helper</h1>
+<div class="container">
+    <ol>
+    <li><input type="checkbox" id="option1" name="option1" value="Option1">
+    <label for="option1">The sender is sus.</label></li><br>
+    <li><input type="checkbox" id="option2" name="option2" value="Option2">
+    <label for="option2">The email offers something too good to be true</label></li><br>
+    <li><input type="checkbox" id="option3" name="option3" value="Option3">
+    <label for="option3">The email is urging you to press some button</label></li><br>
+    <li><label for="checker">Paste the link/name/domain to check if it contains any foreign letter/symbols!</label>
+    <input type="text" id="checker" name="checker"></li>
+    </ol>
+</div>
+<h2 id="result"></h2>
+<ul id="reasonList"></ul>
+<script src="popup.js"></script>
+</body>
+</html>
