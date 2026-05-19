@@ -6,19 +6,39 @@
 <body>
 <h1>Phishing detection helper</h1>
 <div class="container">
-    <ol>
-    <li><input type="checkbox" id="option1" name="option1" value="Option1">
-    <label for="option1">The sender is sus.</label></li><br>
-    <li><input type="checkbox" id="option2" name="option2" value="Option2">
-    <label for="option2">The email offers something too good to be true</label></li><br>
-    <li><input type="checkbox" id="option3" name="option3" value="Option3">
-    <label for="option3">The email is urging you to press some button</label></li><br>
-    <li><label for="checker">Paste the link/name/domain to check if it contains any foreign letter/symbols!</label>
-    <input type="text" id="checker" name="checker"></li>
-    </ol>
+    <div class="tab">
+        <button class="tablinks" data-tab="Email">E-mail</button>
+        <button class="tablinks" data-tab="Text">Text message</button>
+        <button class="tablinks" data-tab="Call">Phone call</button>
+    </div>
+
+    <div id="Email" class="tabcontent">
+        <ol>
+        <li><input type="checkbox" id="email_option1" name="email_option1" value="email_option3">
+        <label for="email_option1">The sender is sus.</label></li><br>
+        <li><input type="checkbox" id="email_option2" name="email_option2" value="Email_option2">
+        <label for="email_option2">The email offers something too good to be true</label></li><br>
+        <li><input type="checkbox" id="email_option3" name="email_option3" value="Email_option3">
+        <label for="email_option3">The email is urging you to press some button</label></li><br>
+        <li><label for="email_checker">Paste the link/name/domain to check if it contains any foreign letter/symbols!</label>
+        <input type="text" id="email_checker" name="checker"></li>
+        </ol>
+        <h2 id="email_result"></h2>
+        <ul id="reasonList"></ul>
+    </div>
+
+    <div id="Text" class="tabcontent">
+        <ol>
+        <p>checklist for text message phishing</p>
+        </ol>
+    </div>
+
+    <div id="Call" class="tabcontent">
+        <ol>
+        <p>checklist for a phone call</p>
+        </ol>
+    </div>
 </div>
-<h2 id="result"></h2>
-<ul id="reasonList"></ul>
 <script src="popup.js"></script>
 </body>
 </html>
