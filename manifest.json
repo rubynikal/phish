@@ -1,7 +1,7 @@
 {
 "manifest_version": 3,
-"name": "Hello World!",
-"description": "This extension shows a Hello World message!",
+"name": "Phishing Detector",
+"description": "This extension helps users determine if the message/email/call they received is phishing or not!",
 "version": "1.0",
 "action": {
     "default_icon": "icon.png",

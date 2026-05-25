@@ -2,6 +2,7 @@
 <html>
 <head>
     <link rel="stylesheet" href="window.css">
+    <metadata encoding="utf-8"></metadata>
 </head>
 <body>
 <h1>Phishing detection helper</h1>
@@ -10,33 +11,92 @@
         <button class="tablinks" data-tab="Email">E-mail</button>
         <button class="tablinks" data-tab="Text">Text message</button>
         <button class="tablinks" data-tab="Call">Phone call</button>
+        <button class="tablinks" data-tab="Advice">Advice</button>
     </div>
 
     <div id="Email" class="tabcontent">
         <ol>
-        <li><input type="checkbox" id="email_option1" name="email_option1" value="email_option3">
-        <label for="email_option1">The sender is sus.</label></li><br>
+        <li><input type="checkbox" id="email_option1" name="email_option1" value="Email_option1">
+        <label for="email_option1">Does the sender's email display a different name than the one they signed with?</label></li><br>
         <li><input type="checkbox" id="email_option2" name="email_option2" value="Email_option2">
-        <label for="email_option2">The email offers something too good to be true</label></li><br>
+        <label for="email_option2">Does the subject line or body of the email convey urgency or pressure?</label></li><br>
         <li><input type="checkbox" id="email_option3" name="email_option3" value="Email_option3">
-        <label for="email_option3">The email is urging you to press some button</label></li><br>
+        <label for="email_option3">Check the sender's email domain, then separately search online for the organisation the sender is claiming to represent - is their official website address different from the domain shown in the sender's email?</label></li><br>
+        <li><input type="checkbox" id="email_option4" name="email_option4" value="Email_option4">
+        <label for="email_option4">Look at how you are addressed in the email. Does the greeting seem unusual or off?</label></li><br>
+        <li><input type="checkbox" id="email_option5" name="email_option5" value="Email_option5">
+        <label for="email_option5">Is the email full of typos and illogical language?</label></li><br>
+        <li><input type="checkbox" id="email_option6" name="email_option6" value="Email_option6">
+        <label for="email_option6">Hover your mouse over any link the email prompts you to click (but do not click it!) - check the bottom of the window to see what web address is displayed.</label></li><br>
+
         <li><label for="email_checker">Paste the link/name/domain to check if it contains any foreign letter/symbols!</label>
         <input type="text" id="email_checker" name="checker"></li>
         </ol>
         <h2 id="email_result"></h2>
-        <ul id="reasonList"></ul>
+        <ul id="email_reasonList"></ul>
     </div>
 
     <div id="Text" class="tabcontent">
         <ol>
-        <p>checklist for text message phishing</p>
+        <li><input type="checkbox" id="text_option1" name="text_option1" value="Text_option1">
+        <label for="text_option1">Is the SMS from an organisation you have never interacted with before?</label></li><br>
+        <li><input type="checkbox" id="text_option2" name="text_option2" value="Text_option2">
+        <label for="text_option2">Does the SMS appear separately rather than in the same thread as previous messages from this company?</label></li><br>
+        <li><input type="checkbox" id="text_option3" name="text_option3" value="Text_option3">
+        <label for="text_option3">Does the SMS contain grammar mistakes or typos?</label></li><br>
+        <li><input type="checkbox" id="text_option4" name="text_option4" value="Text_option4">
+        <label for="text_option4">Does the SMS contain a link you are being urged to click?</label></li><br>
+        <li><input type="checkbox" id="text_option5" name="text_option5" value="Text_option5">
+        <label for="text_option5">Does the link contain extra or unusual characters around the organisation's name?</label></li><br>
+        <li><input type="checkbox" id="text_option6" name="text_option6" value="Text_option6">
+        <label for="text_option6">Does the domain and extension in the SMS link differ from the organisation's official website?</label></li><br>
+        <li><input type="checkbox" id="text_option7" name="text_option7" value="Text_option7">
+        <label for="text_option7">Does pasting the SMS text into a detection tool return a warning or error?</label></li><br>
+        <li><input type="checkbox" id="text_option8" name="text_option8" value="Text_option8">
+        <label for="text_option8">If the message claims to be from someone you know - does the writing style seem different from usual?</label></li><br>
+
+        <li><label for="text_checker">Paste the link/name/domain to check if it contains any foreign letter/symbols!</label>
+        <input type="text" id="text_checker" name="checker"></li>
         </ol>
+        <h2 id="text_result"></h2>
+        <ul id="text_reasonList"></ul>
     </div>
 
     <div id="Call" class="tabcontent">
         <ol>
-        <p>checklist for a phone call</p>
+        <li><input type="checkbox" id="call_option1" name="call_option1" value="Call_option1">
+        <label for="call_option1">The caller is sus.</label></li><br>
+        <li><input type="checkbox" id="call_option2" name="call_option2" value="Call_option2">
+        <label for="call_option2">The call offers something too good to be true</label></li><br>
+        <li><input type="checkbox" id="call_option3" name="call_option3" value="Call_option3">
+        <label for="call_option3">The call is urging you to press some button</label></li><br>
         </ol>
+        <h2 id="call_result"></h2>
+        <ul id="call_reasonList"></ul>
+    </div>
+
+    <div id="Advice" class="tabcontent">
+        <div class="safety-tips">
+            <div class="tip">
+                <h3>Think before you click</h3>
+                <p>Never click a link you are not fully confident about - take a moment to verify it first.</p>
+            </div>
+
+            <div class="tip">
+                <h3>Check suspicious links</h3>
+                <p>Before opening any link, verify it using <a href="https://www.urlvoid.com/" target="_blank">URLVoid</a> - a free tool that helps determine whether a link is safe and reputable.</p>
+            </div>
+
+            <div class="tip">
+                <h3>Protect your devices with a firewall</h3>
+                <p>Install a firewall on all your devices, including your phone. We recommend <a href="https://cert.lv/lv/par-mums/cert-lv-dns-ugunsmuris" target="_blank">Ugunsmuris</a> by CERT.LV - a free DNS firewall that blocks malicious websites automatically.</p>
+            </div>
+
+            <div class="tip">
+                <h3>Keep your personal data safe</h3>
+                <p>Never enter personal data on a website you do not fully trust - when in doubt, close the page.</p>
+            </div>
+            </div>
     </div>
 </div>
 <script src="popup.js"></script>

@@ -1,11 +1,48 @@
+const categories = {
+  email: {
+    checkboxes: [
+    { id: "email_option1", weight: 10, reason: "Legitimate senders always sign with the name that appears in their email address. A mismatch is a common tactic used to impersonate trusted contacts." },
+    { id: "email_option2", weight: 10, reason: "Phishing emails create a false sense of urgency to pressure you into acting before you think critically. Legitimate organisations rarely demand immediate action." },
+    { id: "email_option3", weight: 15, reason: "If the domain in the sender's email doesn't match the organisation's official website, the email is almost certainly fraudulent." },
+    { id: "email_option4", weight: 10, reason: "Generic or strange greetings (e.g. 'Dear Customer' or 'Hello Friend') suggest the sender does not actually know who you are - a hallmark of mass phishing attempts." },
+    { id: "email_option5", weight: 10, reason: "Poor grammar, typos, and awkward phrasing are common in phishing emails, often because they are written hastily or translated from another language." },
+    { id: "email_option6", weight: 20, reason: "The visible link text can say anything - the real destination URL is what matters. Hovering reveals where you would actually be sent, which in phishing emails is often a fake or malicious site." },
+    ],
+    textInput: { id: "email_checker", weight: 10, reason: "Contains foreign-script characters!" },
+    resultId: "email_result",
+    reasonListId: "email_reasonList",
+  },
+  text: {
+    checkboxes: [
+    { id: "sms_option1", weight: 10, reason: "If the SMS appears to come from an organisation you have never interacted with, there is no legitimate reason for them to contact you." },
+    { id: "sms_option2", weight: 10, reason: "Legitimate messages from a company typically appear in the same thread as previous messages. A separate, standalone message is a common sign of spoofing." },
+    { id: "sms_option3", weight: 10, reason: "Poor grammar and typos suggest the message was written hastily or by an automated tool - a common trait of phishing SMS campaigns." },
+    { id: "sms_option4", weight: 15, reason: "Unsolicited links in SMS messages are one of the most common phishing vectors. Legitimate organisations rarely ask you to act via a link in a text." },
+    { id: "sms_option5", weight: 15, reason: "Extra characters or misspellings in a link (e.g. 'paypa1.com' instead of 'paypal.com') are used to trick you into visiting a fake site that looks legitimate." },
+    { id: "sms_option6", weight: 20, reason: "If the domain or extension in the SMS link does not match the organisation's real website, the link is fraudulent regardless of how legitimate the message looks." },
+    { id: "sms_option7", weight: 20, reason: "Spam and phishing detection tools can flag suspicious content in the message text. An error or warning is a strong indicator the message is not safe." },
+    { id: "sms_option8", weight: 15, reason: "Scammers sometimes compromise or impersonate known contacts. An unusual writing style from a familiar number may mean someone else is sending the message." },
+    ],
+    textInput: { id: "text_checker", weight: 10, reason: "Contains foreign-script characters!" }, 
+    resultId: "text_result",
+    reasonListId: "text_reasonList",
+  },
+  call: {
+    checkboxes: [
+      { id: "call_option1", weight: 10, reason: "Unknown caller number." },
+      { id: "call_option2", weight: 10, reason: "Unknown caller number." },
+      { id: "call_option3", weight: 10, reason: "Unknown caller number." },
+      
+    ],
+    textInput: null, // no text input
+    resultId: "call_result",
+    reasonListId: "call_reasonList",
+  }
+};
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
-    let result = 0;
-    let reasons = [];
-    const email_resultText = document.getElementById("email_result");
-    const email_checkbox1 = document.getElementById("email_option1");
-    const email_checkbox2 = document.getElementById("email_option2");
-    const email_checkbox3 = document.getElementById("email_option3");
-    const email_inputText = document.getElementById("email_checker");
 
     //tab handling
     document.querySelectorAll(".tablinks").forEach(button => {
@@ -37,61 +74,89 @@ document.addEventListener("DOMContentLoaded", () => {
         return false;
     }
 
-    //updates and displays final results
-    function updateResult() {
-        if (result > 20) {
-            email_resultText.textContent = "VERY VERY fishy";
-        } else if (result > 10) {
-            email_resultText.textContent = "Medium fishy";
-        } else if (result > 0){
-            email_resultText.textContent = "a lil fishy";
-        } else {
-            email_resultText.textContent = "";
-        }
+    // //updates and displays final results
+    // function updateResult() {
+    //     if (result > 20) {
+    //         email_resultText.textContent = "VERY VERY fishy";
+    //     } else if (result > 10) {
+    //         email_resultText.textContent = "Medium fishy";
+    //     } else if (result > 0){
+    //         email_resultText.textContent = "a lil fishy";
+    //     } else {
+    //         email_resultText.textContent = "";
+    //     }
 
-        const list = document.getElementById("reasonList");
-        list.innerHTML = ""; 
-        reasons.forEach((item) => {
-            if (item) { 
-                let li = document.createElement("li");
-                li.innerText = item;
-                list.appendChild(li);
+    //     const list = document.getElementById("email_reasonList");
+    //     list.innerHTML = ""; 
+    //     reasons.forEach((item) => {
+    //         if (item) { 
+    //             let li = document.createElement("li");
+    //             li.innerText = item;
+    //             list.appendChild(li);
+    //         }
+    //     });
+    // }
+
+
+    //recalculates the numeric result
+    function calcScore(config) {
+        let score = 0;
+        for (const checkbox of config.checkboxes) {
+            if (document.getElementById(checkbox.id).checked) score += checkbox.weight;
+        }
+        if (config.textInput) {
+            if (checkText(document.getElementById(config.textInput.id).value)) {
+                score += config.textInput.weight;
             }
+        }
+        return score;
+    }
+
+    function getReasons(config) {
+        const reasons = [];
+        for (const cb of config.checkboxes) {
+            if (document.getElementById(cb.id).checked) reasons.push(cb.reason);
+        }
+        if (config.textInput) {
+            if (checkText(document.getElementById(config.textInput.id).value)) {
+            reasons.push(config.textInput.reason);
+            }
+        }
+        return reasons;
+    }
+
+    function updateResult(config) {
+        const score = calcScore(config);
+        const reasons = getReasons(config);
+
+        const resultEl = document.getElementById(config.resultId);
+        if (score > 20) resultEl.textContent = "VERY VERY fishy";
+        else if (score > 10) resultEl.textContent = "Medium fishy";
+        else if (score > 0) resultEl.textContent = "a lil fishy";
+        else resultEl.textContent = "";
+
+        const list = document.getElementById(config.reasonListId);
+        list.innerHTML = "";
+        reasons.forEach(r => {
+            const li = document.createElement("li");
+            li.textContent = r;
+            list.appendChild(li);
         });
     }
 
-    //recalculates the numeric result
-    function recalcResult() {
-        result = 0;
-        if (email_checkbox1.checked) result += 10;
-        if (email_checkbox2.checked) result += 10;
-        if (email_checkbox3.checked) result += 10;
-        if (checkText(email_inputText.value)) result += 10;
-        updateResult();
+    function setupTab(config) {
+        for (const cb of config.checkboxes) {
+            document.getElementById(cb.id).addEventListener("change", () => updateResult(config));
+        }
+        if (config.textInput) {
+            document.getElementById(config.textInput.id).addEventListener("input", () => updateResult(config));
+        }
     }
-    //checkboxes
-    email_checkbox1.addEventListener("change", () => {
-        reasons[0] = email_checkbox1.checked ? "If the sender is sus then might be phishing." : "";
-        recalcResult();
-    });
 
-    email_checkbox2.addEventListener("change", () => {
-        reasons[1] = email_checkbox2.checked ? "Free cheese only in the mouse catcher." : "";
-        recalcResult();
-    });
-
-    email_checkbox3.addEventListener("change", () => {
-        reasons[2] = email_checkbox3.checked ? "PRESSING BUTTONS OR LINKS IS DANGEROUS!!" : "";
-        recalcResult();
-    });
-
-    //sender/domain checker
-    email_inputText.addEventListener("input", () => {
-        const hasForeign = checkText(email_inputText.value);
-        reasons[3] = hasForeign ? "Text contains foreign letters! Beware!!!" : "";
-        recalcResult();
-    });
-
-    //
+    Object.values(categories).forEach(setupTab);
+    const defaultTab = document.querySelector('[data-tab="Email"]');
+    document.querySelectorAll(".tabcontent").forEach(tab => tab.style.display = "none");
+    document.getElementById("Email").style.display = "block";
+    defaultTab.classList.add("active");
 
 })
