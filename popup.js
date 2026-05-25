@@ -8,7 +8,7 @@ const categories = {
     { id: "email_option5", weight: 10, reason: "Poor grammar, typos, and awkward phrasing are common in phishing emails, often because they are written hastily or translated from another language." },
     { id: "email_option6", weight: 20, reason: "The visible link text can say anything - the real destination URL is what matters. Hovering reveals where you would actually be sent, which in phishing emails is often a fake or malicious site." },
     ],
-    textInput: { id: "email_checker", weight: 10, reason: "Contains foreign-script characters!" },
+    textInput: { id: "email_checker", weight: 10, reason: "Contains mixed script characters!" },
     resultId: "email_result",
     reasonListId: "email_reasonList",
   },
@@ -63,40 +63,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    //Email Tab Management
-    //checks if the text contains any foreign letters/symbols
+    //checks if the text contains mixed letters/symbols
     function checkText(value) {
-        const scripts = ["Cyrillic", "Greek", "Arabic", "Hebrew"];
-        for (const script of scripts) {
-            const regex = new RegExp(`\\p{Script=${script}}`, "u");
-            if (regex.test(value)) return true; // also fix: value not str
+        const scripts = ["Latin", "Cyrillic", "Greek", "Arabic", "Hebrew"];
+        const found = scripts.filter(script => 
+            new RegExp(`\\p{Script=${script}}`, "u").test(value)
+        );
+        return found.length > 1;
         }
-        return false;
-    }
-
-    // //updates and displays final results
-    // function updateResult() {
-    //     if (result > 20) {
-    //         email_resultText.textContent = "VERY VERY fishy";
-    //     } else if (result > 10) {
-    //         email_resultText.textContent = "Medium fishy";
-    //     } else if (result > 0){
-    //         email_resultText.textContent = "a lil fishy";
-    //     } else {
-    //         email_resultText.textContent = "";
-    //     }
-
-    //     const list = document.getElementById("email_reasonList");
-    //     list.innerHTML = ""; 
-    //     reasons.forEach((item) => {
-    //         if (item) { 
-    //             let li = document.createElement("li");
-    //             li.innerText = item;
-    //             list.appendChild(li);
-    //         }
-    //     });
-    // }
-
 
     //recalculates the numeric result
     function calcScore(config) {
