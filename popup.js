@@ -14,14 +14,14 @@ const categories = {
   },
   text: {
     checkboxes: [
-    { id: "sms_option1", weight: 10, reason: "If the SMS appears to come from an organisation you have never interacted with, there is no legitimate reason for them to contact you." },
-    { id: "sms_option2", weight: 10, reason: "Legitimate messages from a company typically appear in the same thread as previous messages. A separate, standalone message is a common sign of spoofing." },
-    { id: "sms_option3", weight: 10, reason: "Poor grammar and typos suggest the message was written hastily or by an automated tool - a common trait of phishing SMS campaigns." },
-    { id: "sms_option4", weight: 15, reason: "Unsolicited links in SMS messages are one of the most common phishing vectors. Legitimate organisations rarely ask you to act via a link in a text." },
-    { id: "sms_option5", weight: 15, reason: "Extra characters or misspellings in a link (e.g. 'paypa1.com' instead of 'paypal.com') are used to trick you into visiting a fake site that looks legitimate." },
-    { id: "sms_option6", weight: 20, reason: "If the domain or extension in the SMS link does not match the organisation's real website, the link is fraudulent regardless of how legitimate the message looks." },
-    { id: "sms_option7", weight: 20, reason: "Spam and phishing detection tools can flag suspicious content in the message text. An error or warning is a strong indicator the message is not safe." },
-    { id: "sms_option8", weight: 15, reason: "Scammers sometimes compromise or impersonate known contacts. An unusual writing style from a familiar number may mean someone else is sending the message." },
+    { id: "text_option1", weight: 10, reason: "If the SMS appears to come from an organisation you have never interacted with, there is no legitimate reason for them to contact you." },
+    { id: "text_option2", weight: 10, reason: "Legitimate messages from a company typically appear in the same thread as previous messages. A separate, standalone message is a common sign of spoofing." },
+    { id: "text_option3", weight: 10, reason: "Poor grammar and typos suggest the message was written hastily or by an automated tool - a common trait of phishing SMS campaigns." },
+    { id: "text_option4", weight: 15, reason: "Unsolicited links in SMS messages are one of the most common phishing vectors. Legitimate organisations rarely ask you to act via a link in a text." },
+    { id: "text_option5", weight: 15, reason: "Extra characters or misspellings in a link (e.g. 'paypa1.com' instead of 'paypal.com') are used to trick you into visiting a fake site that looks legitimate." },
+    { id: "text_option6", weight: 20, reason: "If the domain or extension in the SMS link does not match the organisation's real website, the link is fraudulent regardless of how legitimate the message looks." },
+    { id: "text_option7", weight: 20, reason: "Spam and phishing detection tools can flag suspicious content in the message text. An error or warning is a strong indicator the message is not safe." },
+    { id: "text_option8", weight: 15, reason: "Scammers sometimes compromise or impersonate known contacts. An unusual writing style from a familiar number may mean someone else is sending the message." },
     ],
     textInput: { id: "text_checker", weight: 10, reason: "Contains foreign-script characters!" }, 
     resultId: "text_result",
@@ -102,12 +102,17 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateResult(config) {
         const score = calcScore(config);
         const reasons = getReasons(config);
+        let max_score = 0;
+        for (let cb of config.checkboxes){
+            max_score += cb.weight;
+        }
+        if (config.textInput) { max_score += config.textInput.weight; }
 
         const resultEl = document.getElementById(config.resultId);
-        if (score > 20) resultEl.textContent = "VERY VERY fishy";
-        else if (score > 10) resultEl.textContent = "Medium fishy";
-        else if (score > 0) resultEl.textContent = "a lil fishy";
-        else resultEl.textContent = "";
+        if (score > max_score*(2/3)) resultEl.textContent = "High risk - there are many serious signs of phishing. It is better to report and block, not engage.";
+        else if (score > max_score*(1/3)) resultEl.textContent = "Medium risk - there are multiple signs of phishing! It is better to not engage.";
+        else if (score > 0) resultEl.textContent = "Small risk - there are a few signs of phishing. Procede with caution.";
+        else resultEl.textContent = "There are no signs of phishing!";
 
         const list = document.getElementById(config.reasonListId);
         list.innerHTML = "";
@@ -128,9 +133,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     Object.values(categories).forEach(setupTab);
-    const defaultTab = document.querySelector('[data-tab="Email"]');
-    document.querySelectorAll(".tabcontent").forEach(tab => tab.style.display = "none");
-    document.getElementById("Email").style.display = "block";
-    defaultTab.classList.add("active");
-
 })
