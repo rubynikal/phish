@@ -5,6 +5,7 @@
     <metadata encoding="utf-8"></metadata>
 </head>
 <body>
+<div id="window">
 <h1>Phishing detection helper</h1>
 <div class="container">
     <div class="tab">
@@ -27,7 +28,7 @@
         <li><input type="checkbox" id="email_option5" name="email_option5" value="Email_option5">
         <label for="email_option5">Is the email full of typos and illogical language?</label></li><br>
         <li><input type="checkbox" id="email_option6" name="email_option6" value="Email_option6">
-        <label for="email_option6">Hover your mouse over any link the email prompts you to click (but do not click it!) - check the bottom of the window to see what web address is displayed.</label></li><br>
+        <label for="email_option6">Hover your mouse over any link the email prompts you to click (but do not click it!) - check the bottom of the window to see what web address is displayed. Is it different fron the one displayed in the link itself?</label></li><br>
 
         <li><label for="email_checker">Paste the link/name/domain to check if it contains any foreign letter/symbols!</label>
         <input type="text" id="email_checker" name="checker"></li>
@@ -51,9 +52,7 @@
         <li><input type="checkbox" id="text_option6" name="text_option6" value="Text_option6">
         <label for="text_option6">Does the domain and extension in the SMS link differ from the organisation's official website?</label></li><br>
         <li><input type="checkbox" id="text_option7" name="text_option7" value="Text_option7">
-        <label for="text_option7">Does pasting the SMS text into a detection tool return a warning or error?</label></li><br>
-        <li><input type="checkbox" id="text_option8" name="text_option8" value="Text_option8">
-        <label for="text_option8">If the message claims to be from someone you know - does the writing style seem different from usual?</label></li><br>
+        <label for="text_option7">If the message claims to be from someone you know - does the writing style seem different from usual?</label></li><br>
 
         <li><label for="text_checker">Paste the link/name/domain to check if it contains any foreign letter/symbols!</label>
         <input type="text" id="text_checker" name="checker"></li>
@@ -65,11 +64,25 @@
     <div id="Call" class="tabcontent">
         <ol>
         <li><input type="checkbox" id="call_option1" name="call_option1" value="Call_option1">
-        <label for="call_option1">The caller is sus.</label></li><br>
+        <label for="call_option1">Does the caller claim to be from an official government institution but speaks in a foreign language?</label></li><br>
         <li><input type="checkbox" id="call_option2" name="call_option2" value="Call_option2">
-        <label for="call_option2">The call offers something too good to be true</label></li><br>
+        <label for="call_option2">Does the caller claim to be from an official government institution but does not know your name?</label></li><br>
         <li><input type="checkbox" id="call_option3" name="call_option3" value="Call_option3">
-        <label for="call_option3">The call is urging you to press some button</label></li><br>
+        <label for="call_option3">Does the caller struggle to speak or understand the language they called you in?</label></li><br>
+        <li><input type="checkbox" id="call_option4" name="call_option4" value="Call_option4">
+        <label for="call_option4">Does the caller's language sound illogical or hard to follow?</label></li><br>
+        <li><input type="checkbox" id="call_option5" name="call_option5" value="Call_option5">
+        <label for="call_option5">Is the call coming from a foreign country code you have no connection to?</label></li><br>
+        <li><input type="checkbox" id="call_option6" name="call_option6" value="Call_option6">
+        <label for="call_option6">Does the caller ask for sensitive information such as online banking credentials, Smart-ID or eSignature codes, card number or CVV, personal ID number, or SMS confirmation codes?</label></li><br>
+        <li><input type="checkbox" id="call_option7" name="call_option7" value="Call_option7">
+        <label for="call_option7">Does the caller claim to be from an official institution but only knows very general information about you?</label></li><br>
+        <li><input type="checkbox" id="call_option8" name="call_option8" value="Call_option8">
+        <label for="call_option8">Does the caller pressure you to act immediately, using phrases like "act now", "your account will be blocked", or "there is a security issue"?</label></li><br>
+        <li><input type="checkbox" id="call_option9" name="call_option9" value="Call_option9">
+        <label for="call_option9">Did the caller hang up quickly after calling, possibly hoping you will call back on an expensive number (wangiri scam)?</label></li><br>
+        <li><input type="checkbox" id="call_option10" name="call_option10" value="Call_option10">
+        <label for="call_option10">Does the caller ask you to install remote access software (e.g. AnyDesk, TeamViewer) or share your screen via WhatsApp?</label></li><br>
         </ol>
         <h2 id="call_result"></h2>
         <ul id="call_reasonList"></ul>
@@ -98,6 +111,7 @@
             </div>
             </div>
     </div>
+</div>
 </div>
 <script src="popup.js"></script>
 </body>
