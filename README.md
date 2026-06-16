@@ -1,6 +1,6 @@
 # Installing the Chrome Extension
 
-## 📦 Part 1 - Download the Code
+## Part 1 - Download the Code
 
 **1. Open the GitHub repository**  
 https://github.com/rubynikal/phish  
@@ -13,11 +13,11 @@ It will download to your Downloads folder.
 - Windows: Right-click → Extract All  
 - Mac: Double-click the ZIP file  
 
-⚠️ Keep this folder somewhere permanent - Chrome needs it to stay there.
+Keep this folder somewhere permanent - Chrome needs it to stay there.
 
 ---
 
-## 🌐 Part 2 — Load into Chrome
+## Part 2 — Load into Chrome
 
 **4. Open Extensions page**  chrome://extensions
 
